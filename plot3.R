@@ -10,8 +10,9 @@ unzip(zipfile = "rawdata//emissionsdata.zip", exdir = "rawdata//emissionsdata")
 NEI <- readRDS("rawdata//emissionsdata//summarySCC_PM25.rds")
 SCC <- readRDS("rawdata//emissionsdata//Source_Classification_Code.rds")
 
-# test code
 NEIbaltimore <- NEI[which(NEI$fips=="24510"), ]
+
+# test code
 NEIbaltbytype <- split(NEIbaltimore, NEIbaltimore$type)
 years <- unique(NEI[ , 6])
 frame <- NEIbaltbytype[[1]]
