@@ -8,17 +8,16 @@ unzip(zipfile = "rawdata//emissionsdata.zip", exdir = "rawdata//emissionsdata")
 NEI <- readRDS("rawdata//emissionsdata//summarySCC_PM25.rds")
 SCC <- readRDS("rawdata//emissionsdata//Source_Classification_Code.rds")
 
-# split and calculate sums of total emissions by year
-NEIbyyear <- split(NEI, NEI$year)
+NEIbaltimore <- NEI[which(NEI$fips=="24510"), ]
+NEIbaltbyyear <- split(NEIbaltimore, NEIbaltimore$year)
 years <- unique(NEI[ , 6])
 totalpm25 <- vector(mode = "numeric")
-for (frame in NEIbyyear){
+for (frame in NEIbaltbyyear){
     totalpm25yr <- sum(frame[ , 4])
     totalpm25 <- c(totalpm25, totalpm25yr)
 }
-
-# organise data and draw plot
 totalpm25frame <- cbind(years, totalpm25)
-png(filename = "plot1.png")
+png(filename = "plot2.png")
 plot(totalpm25frame)
+abline(lm(totalpm25 ~ years))
 dev.off()
